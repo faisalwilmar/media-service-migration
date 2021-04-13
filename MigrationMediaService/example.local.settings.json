@@ -1,0 +1,33 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "CosmosDB": "",
+    "CosmosDBEndPoint": "",
+    "CosmosDBKey": "",
+
+    // jumlah data batch
+    "ProcessingDataMax": 30,
+
+    //#region input source
+    "SourceContainerName": "",
+    "SourceClientConn": "",
+    "SourceClientEndpoint": "",
+    //#endregion
+
+    //#region target source
+    "TargetContainerName": "",
+    "TargetClientConn": "",
+
+    "MediaCredential": "",
+    "MediaTransformName": "",
+    //#endregion
+
+    //#region api style
+    "CopyStorageFileAPIConn": "http://localhost:7071/api/CopyStorageFile_HttpStart",
+    "CopyStorageVideoAPIConn": "http://localhost:7071/api/CopyStorageVideo_HttpStart",
+    "UpdateEncoderStatusAPIConn": "http://localhost:7071/api/Encode/Status/{resourceId}"
+    //#endregion
+  }
+}
