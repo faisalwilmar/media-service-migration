@@ -39,7 +39,7 @@ namespace MigrationMediaService.Services
                     throw new Exception($"SourceEndpoint, SourceContainerName, SourceFilename are required, any one of them are missing");
                 }
 
-                var sourceUri = new Uri($"{sourceEndpoint}/{sourceContainerName}/{sourceFilename}");
+                var sourceUri = new Uri($"{sourceEndpoint.Trim('/')}/{sourceContainerName}/{sourceFilename}");
 
                 // Get a reference to a container named "sample-container" and then create it
                 BlobContainerClient blobContainerTarget = _targetClient.GetBlobContainerClient(targetContainerName);

@@ -38,6 +38,11 @@ namespace MigrationMediaService
             // A single instance will be created and reused
             // with every service request
             builder.Services.AddSingleton<MediaHandler>();
+
+            // Register HttpHandler as singleton.
+            // A single instance will be created and reused
+            // with every service request
+            builder.Services.AddSingleton<HttpHandler>();
         }
     }
 }
