@@ -23,6 +23,11 @@ namespace MigrationMediaService.Services
         private readonly string CREDENTIAL_NAME = "DefaultCredential";
         private readonly string TRANSFORM_NAME = MediaTransform.Name;
 
+        public async Task InitiateClient()
+        {
+            await GetClient();
+        }
+
         private async Task<AzureMediaServicesClient> GetClient()
         {
             AzureMediaServicesClient _client;
@@ -70,11 +75,12 @@ namespace MigrationMediaService.Services
             if (asset != null)
             {
                 await client.Assets.DeleteAsync(credential.ResourceGroup, credential.AccountName, sourceName);
+                await Task.Delay(TimeSpan.FromSeconds(60));
             }
-            do
-            {
-                asset = await client.Assets.GetAsync(credential.ResourceGroup, credential.AccountName, sourceName);
-            } while (asset != null);
+            //do
+            //{
+            //    asset = await client.Assets.GetAsync(credential.ResourceGroup, credential.AccountName, sourceName);
+            //} while (asset != null);
 
             asset = await client.Assets.CreateOrUpdateAsync(credential.ResourceGroup, credential.AccountName,
                 sourceName, new Asset(name: sourceName, container: sourceName));
@@ -108,11 +114,12 @@ namespace MigrationMediaService.Services
                 if (asset != null)
                 {
                     await client.Assets.DeleteAsync(credential.ResourceGroup, credential.AccountName, sourceName);
+                    await Task.Delay(TimeSpan.FromSeconds(60));
                 }
-                do
-                {
-                    asset = await client.Assets.GetAsync(credential.ResourceGroup, credential.AccountName, sourceName);
-                } while (asset != null);
+                //do
+                //{
+                //    asset = await client.Assets.GetAsync(credential.ResourceGroup, credential.AccountName, sourceName);
+                //} while (asset != null);
 
                 asset = await client.Assets.CreateOrUpdateAsync(credential.ResourceGroup, credential.AccountName,
                     sourceName, new Asset(name: sourceName, container: sourceName));
@@ -215,14 +222,19 @@ namespace MigrationMediaService.Services
             var resultName = $"result-{contentAddress.ContainerName}";
             var jobName = $"job-{contentAddress.ContainerName}";
 
-            await client.Assets.DeleteAsync(credential.ResourceGroup, credential.AccountName, resultName);
-            Asset resultAsset;
-            do
+            //await client.Assets.DeleteAsync(credential.ResourceGroup, credential.AccountName, resultName);
+            Asset resultAsset = await client.Assets.GetAsync(credential.ResourceGroup, credential.AccountName, resultName);
+            if(resultAsset != null)
             {
-                await Task.Delay(TimeSpan.FromSeconds(3));
-                resultAsset = client.Assets.Get(credential.ResourceGroup, credential.AccountName, resultName);
+                await client.Assets.DeleteAsync(credential.ResourceGroup, credential.AccountName, resultName);
+                await Task.Delay(TimeSpan.FromSeconds(60));
             }
-            while (resultAsset != null);
+            //do
+            //{
+            //    await Task.Delay(TimeSpan.FromSeconds(60));
+            //    resultAsset = client.Assets.Get(credential.ResourceGroup, credential.AccountName, resultName);
+            //}
+            //while (resultAsset != null);
 
             resultAsset = await client.Assets.CreateOrUpdateAsync(credential.ResourceGroup, credential.AccountName,
                 resultName, new Asset(name: resultName, container: resultName));

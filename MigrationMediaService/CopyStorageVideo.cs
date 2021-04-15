@@ -54,6 +54,8 @@ namespace MigrationMediaService
             inputs.Add("processingDataMax", processingDataMax);
             inputs.Add("sourceContainerName", sourceContainerName);
 
+            await _mediaHandler.InitiateClient();
+
             string instanceId = await client.StartNewAsync("CopyStorageVideo_Orchestrator", null, inputs);
             log.LogInformation($"Started orchestration with ID = '{instanceId}'.");
             return client.CreateCheckStatusResponse(req, instanceId);

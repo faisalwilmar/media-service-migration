@@ -44,6 +44,10 @@ namespace MigrationMediaService.Services
                 // Get a reference to a container named "sample-container" and then create it
                 BlobContainerClient blobContainerTarget = _targetClient.GetBlobContainerClient(targetContainerName);
                 BlobClient blob = blobContainerTarget.GetBlobClient(targetFilename);
+                if (await FileIsExists(targetContainerName, targetFilename))
+                {
+                    DeleteData(targetContainerName, targetFilename);
+                }
                 await blob.StartCopyFromUriAsync(sourceUri);
             }
             catch (Exception ex)
@@ -74,6 +78,10 @@ namespace MigrationMediaService.Services
             {
                 BlobContainerClient blobContainerTarget = _targetClient.GetBlobContainerClient(targetContainerName);
                 BlobClient blob = blobContainerTarget.GetBlobClient(targetFilename);
+                if (await FileIsExists(targetContainerName, targetFilename))
+                {
+                    DeleteData(targetContainerName, targetFilename);
+                }
                 await blob.StartCopyFromUriAsync(sourceUri);
 
             }
@@ -139,6 +147,10 @@ namespace MigrationMediaService.Services
                 // Get a reference to a container named "sample-container" and then create it
                 BlobContainerClient blobContainerTarget = _targetClient.GetBlobContainerClient(targetContainerName);
                 BlobClient blob = blobContainerTarget.GetBlobClient(targetFilename);
+                if(await FileIsExists(targetContainerName, targetFilename))
+                {
+                    DeleteData(targetContainerName, targetFilename);
+                }
                 await blob.UploadAsync(ms);
             }
             catch (Exception ex)

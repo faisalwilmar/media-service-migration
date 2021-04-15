@@ -30,7 +30,7 @@ namespace MigrationMediaService
         }
 
         [FunctionName("CopyStorageFileTrigger")]
-        public async Task CopyStorageFileTrigger([TimerTrigger("*/10 * * * * *")] TimerInfo myTimer, ILogger log)
+        public async Task CopyStorageFileTrigger([TimerTrigger("0,30 * * * * *")] TimerInfo myTimer, ILogger log)
         {
             var copyStorageAPIName = "COPY_STORAGE_FILE_HTTP";
             var copyStorageAPIConn = Environment.GetEnvironmentVariable("CopyStorageFileAPIConn");
@@ -39,7 +39,7 @@ namespace MigrationMediaService
         }
 
         [FunctionName("EncodeVideoTrigger")]
-        public async Task CopyStorageVideoTrigger([TimerTrigger("*/10 * * * * *")] TimerInfo myTimer, ILogger log)
+        public async Task CopyStorageVideoTrigger([TimerTrigger("1,31 * * * * *")] TimerInfo myTimer, ILogger log)
         {
             var copyStorageVideoAPIName = "COPY_STORAGE_VIDEO_HTTP";
             var copyStorageVideoAPIConn = Environment.GetEnvironmentVariable("CopyStorageVideoAPIConn");
@@ -48,7 +48,7 @@ namespace MigrationMediaService
         }
 
         [FunctionName("UpdateVideoStatusTrigger")]
-        public async Task UpdateVideoStatus([TimerTrigger("*/30 * * * * *")] TimerInfo myTimer, ILogger log)
+        public async Task UpdateVideoStatus([TimerTrigger("32 */3 * * * *")] TimerInfo myTimer, ILogger log)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace MigrationMediaService
         }
 
         [FunctionName("UpdateBlobStatusTrigger")]
-        public async Task UpdateBlobStatus([TimerTrigger("*/30 * * * * *")] TimerInfo myTimer, ILogger log)
+        public async Task UpdateBlobStatus([TimerTrigger("4,34 * * * * *")] TimerInfo myTimer, ILogger log)
         {
             try
             {
